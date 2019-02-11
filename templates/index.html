@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PETS</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <div id="header">
+        <div class="container">
+            <span class="dot"></span>
+            <p>PETs Registration</p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="pets_list">
+            <div class="form-group">
+                <h3>All the Pets</h3>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Pet Name</th>
+                        <th>Type</th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pet in petsList %}
+                        <tr>
+                            <td> {{ loop.index }} </td>
+                            <td> {{ pet['name'] }}  </td>                
+                            <td> {{ pet['type'] }}  </td>
+                            <td> 
+                                <form action="/update_form" method="GET">
+                                    <input type="hidden" name="pet_id" value="{{ pet['pet_id'] }}">
+                                    <input type="submit" value="UPDATE">
+                                </Form> 
+                            </td>
+                            <td> 
+                                <form action="/delete_pet" method="POST">
+                                    <input type="hidden" name="pet_id" value="{{ pet['pet_id'] }}"> 
+                                    <input type="submit" value="DELETE">
+                                </form>  
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="pet_add_form">
+            <div class="form-group">
+                <h3>Add a Pet</h3>
+            </div>
+            <div>
+                <form action="/insert_pets" method="POST">
+                    <div class="form-group">
+                        <label for="pet_name">Pet Name</label>
+                        <input type="text" class="form-control" name="pet_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="pet_type">Pet Type</label>
+                        <input type="text" class="form-control" name="pet_type">
+                    </div>
+
+                    <input type="submit" class="btn btn-primary" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
